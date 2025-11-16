@@ -1,3 +1,16 @@
+/* ---------------------------------------------------------------------------
+** I attest that this following code represents my own work and is subject to
+** the plagiarism policy found in the course syllabus.
+**
+** Class: 	CSC 242
+** Assignment: 	Lesson #5 Problem 1
+** File: 	Source.cpp
+** Description: Finds misspelled words in a file by searching a vector
+**
+** Author: 	Nubila Levon, Shequita Boswell, xxx, xxx
+** Date: 	November 16, 2025
+** -------------------------------------------------------------------------*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
