@@ -1,0 +1,13 @@
+Ask the user whether they want to encrypt or decrypt.
+
+Ask the user for a shift value (number of positions to shift letters).
+
+Read the text from input.txt.
+
+Apply the Caesar cipher:
+
+Encryption: shift letters forward by the shift value.
+
+Decryption: shift letters backward by the shift value.
+
+Write the result to output.txt.
