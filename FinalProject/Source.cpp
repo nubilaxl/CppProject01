@@ -7,60 +7,78 @@
 ** File: 	Source.cpp
 ** Description: Finds misspelled words in a file by searching a vector
 **
-** Author: 	Nubila Levon, Shequita Boswell, xxx, xxx
+** Author: 	Nubila Levon, Felipe Delgadillo, Martha Rosas, Jonathan Vinje-Shields
 ** Date: 	November 16, 2025
 ** -------------------------------------------------------------------------*/
 
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
 
-vector<string> read_dictionary();
-bool misspelled_word(string word, vector<string> words);
-void check_file(vector<string> words);
+// The dictionary word file and the input file are located in the application directory
 
 
 int main() {
 
-	
+	// Step 1: Open dictionary file 
+
+	ifstream dictFile("words");
+
+	if (!dictFile) {
+
+		cerr << "Error: Could not open dictionary file." << endl;
+
+		return 1;
+
+	}
+
+	// Step 2: Read dictionary words into vector
+
+	vector<string> words;
+
+	string word;
+
+	while (dictFile >> word) {
+
+		words.push_back(word);
+
+	}
+
+	dictFile.close();
+
+	// Step 3: Open file to be checked
+
+	ifstream checkFile("input");
+
+	if (!checkFile) {
+
+		cerr << "Error: Could not open file to check." << endl;
+
+		return 1;
+
+	}
+
+	// Step 4: Read words from file and check against dictionary
+
+	while (checkFile >> word) {
+
+		// If word not found in dictionary vector
+
+		if (find(words.begin(), words.end(), word) == words.end()) {
+
+			cout << word << endl;
+
+		}
+
+	}
+
+	checkFile.close();
 
 	return 0;
 }
 
-/* Reads the dictionary file
-*  @param --none--
-*  @return a vector of word strings from dictionary
-*/
-
-vector<string> read_dictionary()
-{
-
-
-
-}
-
-/* Finds if a word is not in the vector
-*  @param word - the word to search for
-*  @param words - the vector of words to search
-*  @return true if word not found, false if word is in the vector
-*/
-
-bool misspelled_word(string word, vector<string> words)
-{
-
-
-}
-
-/* Reads a file and checks each word for misspelled_word
-*  @param words - the vector of words to search
-*  @return void
-*/
-
-void check_file(vector<string> words)
-{
-
-
-}

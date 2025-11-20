@@ -13,93 +13,156 @@
 
 #include <iostream>
 #include <algorithm>
-#include <vector>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
 
-char get_encryption_mode();
-int get_shift();
-vector<char> read_textfile(string filepath);
-bool validate_char(char ch);
-vector<char> encrypt(vector<char> characters, int shift);
-vector<char> decrypt(vector<char> code_chars, int shift);
-void print_output(vector<char> outbuffer);
+string readFile(string filename);
+char shiftChar(char c, int shift, bool encrypt);
+string ceaserCipher(const string& text, int shift, bool encrypt);
+void writeFile(const string& filename, const string& text);
+
 
 
 int main() {
+
+	string mode;
+
+	int shift;
+
+
+	// Ask user for mode
+
+	cout << "Enter mode(encrypt / decrypt) : ";
+
+	cin >> mode;
+
+
+	// Ask user for shift value
+
+	cout << "Enter shift value : ";
+
+	cin >> shift;
+
+
+	// Read input file
+	string inputText = "";
+	inputText = readFile("input");
+	if (inputText == "-1") {
+		cout << "Error reading input file";
+		return -1;
+	}
+
+
+	// Apply Caesar cipher
+
+	bool encrypt = (mode == "encrypt");
+
+	string outputText = ceaserCipher(inputText, shift, encrypt);
+
+
+	// Write result to output file
+
+	writeFile("output.txt", outputText);
+
+	cout << "Operation completed.Check out.txt for result." << endl;
+
+
 
 
 
 	return 0;
 }
 
-/* Gets the encryption mode from user
-*  @param --none--
-*  @return an e or a d 
-*/
-char get_encryption_mode()
-{
 
-}
-
-/* Gets the shift value from user
-*  @param --none--
-*  @return integer shift value
-*/
-int get_shift()
-{
-
-
-
-}
 
 /* Reads a text file one char at a time into a vector
-*  @param filepath - the pathname of the file
-*  @return vector of characters 
+*  @param filename - the pathname of the file
+*  @return string of text 
 */
-vector<char> read_textfile(string filepath)
-{
+string readFile( string filename) {
+
+	ifstream file(filename.c_str());
+	if (file.fail()) {
+		cout << "Error: can't open file: " << filename << endl;
+		return "-1";
+	}
+
+	string data = "";
+	string content = "";
+
+	while (file >> data) {
+		content = content + data;
+	}
+
+	
+	return content;
 
 }
 
-/* Validates a single character is a letter
-*  @param ch a character
+/* Encodes a single character if it is a letter
+*  @param c a character
+*  @param shift - number of digits to offset the character
+*  @param encrypt - toggle value for encrypt/decrypt
 *  @return true if a letter, false if not
 */
-bool validate_char(char ch)
-{
+char shiftChar(char c, int shift, bool encrypt) {
+
+	if (isalpha(c)) {
+
+		char base = isupper(c) ? 'A' : 'a';
+
+		if (encrypt) {
+
+			return (c - base + shift) % 26 + base;
+
+		}
+		else {
+
+			return (c - base - shift + 26) % 26 + base;
+
+		}
+
+	}
+
+	return c; // Non-letter characters unchanged
 
 }
 
-/* Encrypts a vector of characters by shifting ascii
-*  @param characters vector
-*  @param shift the number of code positions to shift
-*  @return vector of encoded characters
+/* Encrypts using cesar cipher a string of characters by shifting ascii
+*  @param text - the text to be encrypted
+*  @param shift - the number of code positions to shift
+*  @param encrypt - the toggle for encrypting/decrypting
+*  @return string of encoded characters
 */
-vector<char> encrypt(vector<char> characters, int shift)
-{
 
+string ceaserCipher(const string& text, int shift, bool encrypt) {
 
-}
+	string result = "";
 
-/* Decrypts a vector of characters by shifting ascii
-*  @param characters vector
-*  @param shift the number of code positions to shift
-*  @return vector of decoded characters
-*/
-vector<char> decrypt(vector<char> code_chars, int shift)
-{
+	for (char c : text) {
 
+		result += shiftChar(c, shift, encrypt);
+
+	}
+
+	return result;
 
 }
+
+
 
 /* Prints to the output.txt file a vector of characters
-*  @param outbuffer a vector of characters
+*  @param filename - the name of the file
+*  @param text - the output text
 *  @return void
 */
-void print_output(vector<char> outbuffer)
-{
+void writeFile(const string& filename, const string& text) {
 
+	ofstream file(filename);
+
+	file << text;
 
 }
