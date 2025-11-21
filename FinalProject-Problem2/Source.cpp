@@ -49,7 +49,7 @@ int main() {
 
 	// Read input file
 	string inputText = "";
-	inputText = readFile("input");
+	inputText = readFile("input.txt");
 	if (inputText == "-1") {
 		cout << "Error reading input file";
 		return -1;
@@ -67,7 +67,7 @@ int main() {
 
 	writeFile("output.txt", outputText);
 
-	cout << "Operation completed.Check out.txt for result." << endl;
+	cout << "Operation completed.Check output.txt for result." << endl;
 
 
 
@@ -94,7 +94,7 @@ string readFile( string filename) {
 	string content = "";
 
 	while (file >> data) {
-		content = content + data;
+		content = content + data + "\n";
 	}
 
 	
@@ -127,8 +127,10 @@ char shiftChar(char c, int shift, bool encrypt) {
 
 	}
 
-	return c; // Non-letter characters unchanged
+	else {
 
+		return c; // Non-letter characters unchanged
+	}
 }
 
 /* Encrypts using cesar cipher a string of characters by shifting ascii
